@@ -1,0 +1,96 @@
+Write a function that takes in an array of integers and returns an array of length 2 
+representing the largest range of numbers contained in that array. The first number
+in the output array should be the first number in the range while the second number
+should be the last number in the range. A range of numbers is defined as a set of 
+numbers that come right after each other in the set of real integers. For instance, 
+the output array [2, 6] represents the range {2, 3, 4, 5, 6}, which is a range of 
+length 5. Note that numbers do not need to be ordered or adjacent in the array in order 
+to form a range. Assume that there will only be one largest range.
+
+function largestRange(array){
+let visited = {}
+let allNums = {}
+let maxDiff = -Infinity
+let result
+for(let num of array){
+  allNums[num] = true
+}
+
+for(let i = 0; i < array.length; i++){
+  let currNum = array[i]
+  if(visited[currNum]) continue
+  let range = explore(currNum, allNums, visited)
+  let diff = range[1] - range[0]
+  if(diff > maxDiff){
+    maxDiff = diff
+    result = range
+  }
+}
+  return result
+}
+
+
+function explore(num,allNums,visited){
+  let min = num 
+  let max = num
+  while(allNums[min - 1]  !== undefined){
+    visited[min] = true
+    min--
+  }
+  
+  while(allNums[max + 1] !== undefined){
+    visited[min] = true
+    max++
+  }
+  return [min,max]
+}
+
+
+
+
+
+
+
+
+
+
+main(array)
+2 hashMap
+1 -> visited = {}
+2 -> allNums = {} --> loop through array and add all num: true
+let maxDiff = -Infinity
+let result
+for(let i = 0; i < array.length; i++){
+  let currNum = array[i]
+  if(visited[currNum]) continue
+  let range = explore(currNum, allNums, visited)
+  let diff = range[1] - range[0]
+  if(diff > maxDiff){
+    maxDiff = diff
+    result = range
+  }
+}
+
+return result
+
+explore(num,allNums,visited) -> [MinNum,MaxNum]
+let min = num
+let max = num
+
+while(allNums[min]){
+  visited[min] = true
+  min--
+}
+
+while(allNums[max]){
+  visited[max] = true
+  max++
+}
+
+min++
+max--
+
+return [min,max]
+
+
+
